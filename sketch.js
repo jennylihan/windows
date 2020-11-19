@@ -22,10 +22,13 @@ function draw() {
   text('← miserable', windowWidth * 0.01, windowHeight/2);
   text('↑ high energy', windowWidth/2 - 50, windowHeight*0.025);
   text('↓ low energy', windowWidth/2 - 50, windowHeight*0.965);
+  
+  textSize(15);
   text('ARROW KEYS to move', windowWidth*.01, 20)
   text('SPACE BAR to mark an emotional spot', windowWidth*.01, 40)
   text('TAB to toggle circumplex labels from (Russell, 1980)', windowWidth * .01, 60)
-
+  textSize(25);
+  
   drawEmotions(emotions);
   if (displayRussell){
     drawEmotions(RussellList);
