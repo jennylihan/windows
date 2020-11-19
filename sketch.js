@@ -2,7 +2,7 @@ var x = 0;
 var y = 0;
 let emotions = [];
 let displayRussell = false;
-let RussellList = [[50, 50, '12 am'], [50, 70, 'heyo']];
+let RussellList = [[5, 55,"miserable" ], [15, 60, "sad"], [20, 70, "depressed"], [30, 80, "bored"], [40, 85, "droopy"], [45, 90, "exhausted"], [25, 30, "annoyed"], [20, 25, "frustrated"], [15, 20, "distressed"],[35, 20, "afraid"], [45, 10, "angry"], [60, 10, "astonished"], [77, 20, "excited"], [85, 40, "delighted"],[90, 45, "happy"],[90, 55, "pleased"],[85, 70, "serene"],[80, 75, "satisfied"],[80, 80, "calm"], [55, 90, "sleepy"]];
 
 function setup() {
   background(0);
