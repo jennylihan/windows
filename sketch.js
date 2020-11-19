@@ -4,10 +4,12 @@ let emotions = [];
 let displayRussell = false;
 let space = false;
 let help = false;
+let displayAll = false;
 var database;
 var userId = "";
 let RussellList = [[5, 55,"miserable" ], [15, 60, "sad"], [20, 70, "depressed"], [30, 80, "bored"], [40, 85, "droopy"], [45, 90, "exhausted"], [25, 30, "annoyed"], [20, 25, "frustrated"], [15, 20, "distressed"],[35, 20, "afraid"], [45, 10, "angry"], [60, 10, "astonished"], [77, 20, "excited"], [85, 40, "delighted"],[90, 45, "happy"],[90, 55, "pleased"],[85, 70, "serene"],[80, 75, "satisfied"],[80, 80, "calm"], [55, 90, "sleepy"]];
 let particles = [];
+let displayed_emotions = [];
 
 // this class describes the properties of a single particle.
 class Particle {
@@ -103,11 +105,18 @@ function draw() {
   text('← miserable', windowWidth * 0.01, windowHeight/2);
   text('↑ high energy', windowWidth/2 - 50, windowHeight*0.025);
   text('↓ low energy', windowWidth/2 - 50, windowHeight*0.965);
-  drawEmotions(emotions);
+  // drawEmotions(emotions);
   if (displayRussell){
     drawEmotions(RussellList);
   }
-  fill(mapColor(mouseX, mouseY));
+  if (displayAll){
+    drawEmotions(emotions);
+  } else {
+    drawEmotions(displayed_emotions);
+  }
+  drawEmotions(displayed_emotions);
+  slowRevealEmotions();
+  fill(0,0,0,0);
   strokeWeight(4)
   stroke('white');
   ellipse(mouseX,mouseY,100,100);
@@ -116,7 +125,7 @@ function draw() {
 }
 
 function helpButton() {
-  alert("HOVER MOUSE to move.\nCLICK to mark an emotion location.\nTAB to toggle the circumplex labels.\nSPACE to toggle black background. ");
+  alert("HOVER MOUSE to move.\nCLICK to mark an emotion location.\nTAB to toggle the circumplex labels.\nENTER to toggle the hidden emotions.\nSPACE to toggle black background. ");
   textSize(25);
 }
 
@@ -132,6 +141,19 @@ function drawEmotions(emotionslist){
     // ellipse(x1, y1,50, 50);
     fill(mapColor(x1,y1));
     text(item[2], x1, y1);
+  });
+}
+
+function slowRevealEmotions(){
+  emotions.forEach(function(item, index, array) {
+    x1 = map(item[0], 0, 100, 0, windowWidth);
+    y1 = map(item[1], 0, 100, 0, windowHeight);
+    if (mouseX < x1 + 50 && mouseX > x1 - 50 && mouseY < y1 + 50 && mouseY > y1 - 50){
+      fill('white');
+      text(item[2], x1, y1);
+      console.log(item[2]);
+      displayed_emotions.push(item);
+    }
   });
 }
 
@@ -212,8 +234,7 @@ function keyPressed() {
   } else if (keyCode === RIGHT_ARROW) {
     x = x + 50;
   } else if (keyCode === ENTER) {
-    keyCode = 33;
-    markWord(x, y);
+    displayAll = !displayAll;
   } else if (keyCode === TAB) {
     keyCode = 0;
     displayRussell = !displayRussell;
