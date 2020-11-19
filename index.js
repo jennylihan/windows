@@ -9,3 +9,9 @@ window.transitionToPage = function(href) {
 document.addEventListener('DOMContentLoaded', function(event) {
     document.querySelector('body').style.opacity = 1
 })
+
+function setUp(href){
+  var username = prompt("What file do you want to open up?");
+  localStorage.setItem("username", username);
+  window.transitionToPage(href);
+}

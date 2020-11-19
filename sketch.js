@@ -3,7 +3,10 @@ var y = 0;
 let emotions = [];
 let displayRussell = false;
 let space = false;
+var database;
+var userId = "";
 let RussellList = [[5, 55,"miserable" ], [15, 60, "sad"], [20, 70, "depressed"], [30, 80, "bored"], [40, 85, "droopy"], [45, 90, "exhausted"], [25, 30, "annoyed"], [20, 25, "frustrated"], [15, 20, "distressed"],[35, 20, "afraid"], [45, 10, "angry"], [60, 10, "astonished"], [77, 20, "excited"], [85, 40, "delighted"],[90, 45, "happy"],[90, 55, "pleased"],[85, 70, "serene"],[80, 75, "satisfied"],[80, 80, "calm"], [55, 90, "sleepy"]];
+
 
 function setup() {
   background(0);
@@ -14,6 +17,23 @@ function setup() {
   textAlign(LEFT, CENTER);
   x = windowWidth/2;
   y = windowHeight/2;
+  // Initialize Firebase
+  config = {
+    apiKey: "AIzaSyDmDbY6zDPha9ZoO7p7vzRlmq30Equb7w4",
+    authDomain: "emotions-70dd0.firebaseapp.com",
+    databaseURL: "https://emotions-70dd0.firebaseio.com",
+    projectId: "emotions-70dd0",
+    storageBucket: "emotions-70dd0.appspot.com",
+    messagingSenderId: "157526024323",
+    appId: "1:157526024323:web:fa35041601ccbc3f4efbb6",
+    measurementId: "G-VXC8KS5716"
+  };
+
+  firebase.initializeApp(config);
+  database = firebase.database();
+
+  var ref = database.ref('users');
+  ref.on('value', gotData, errData);
 }
 
 function draw() {
@@ -32,6 +52,7 @@ function draw() {
   text('ENTER to mark an emotional spot', windowWidth*.01, 40)
   text('TAB to toggle circumplex labels', windowWidth * .01, 60)
   text('SPACE to toggle black background', windowWidth * .01, 80)
+  text('ESC to save', windowWidth * .01, 100)
   textSize(25);
   drawEmotions(emotions);
   if (displayRussell){
@@ -71,6 +92,42 @@ function checkIfOutOfBounds(){
   }
 }
 
+function gotData (data) {
+  if (data.val() != null){
+    var users = data.val();
+    var keys = Object.keys(users);
+    var username = localStorage.getItem('username');
+    for (var i = 0; i < keys.length; i++) {
+  	   var k = keys[i];
+  	   var list = users[k].emotionlist;
+  	   var name = users[k].name;
+       if (name == username){
+         emotions = users[keys[0]].emotionlist;
+         userId = keys[i];
+      }
+    }
+  }
+}
+
+function submitData(username) {
+	var data = {
+		name: username,
+	  emotionlist: emotions
+	}
+  if (userId == ""){
+    var ref = database.ref('users');
+    ref.push(data);
+  } else {
+    database.ref('users/' + userId).set(data);
+  }
+}
+
+
+function errData(err) {
+	console.log('Error!');
+  	console.log(err);
+}
+
 function keyPressed() {
   //code adapted from https://editor.p5js.org/2sman/sketches/rkGp1alib
   if (keyCode === UP_ARROW) {
@@ -99,5 +156,8 @@ function keyPressed() {
     displayRussell = !displayRussell;
   } else if (keyCode === 32) {
     space = !space;
+  } else if (keyCode === ESCAPE) {
+    var username = prompt("What should we file this under?", "jenny's music");
+    submitData(username);
   }
 }
