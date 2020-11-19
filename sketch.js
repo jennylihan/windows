@@ -11,7 +11,8 @@ let RussellList = [[5, 55,"miserable" ], [15, 60, "sad"], [20, 70, "depressed"],
 
 function setup() {
   background(0);
-  createCanvas(windowWidth, windowHeight);
+  cnv = createCanvas(windowWidth, windowHeight);
+  cnv.mouseClicked(markWord);
   textSize(25);
   textAlign(LEFT, CENTER);
   x = windowWidth/2;
@@ -53,7 +54,7 @@ function draw() {
   if (space) {
     background('black');
   } else {
-    background(mapColor(x,y));
+    background(mapColor(mouseX,mouseY));
   }
   fill('white');
   text('pleasant →', windowWidth *.90, windowHeight/2);
@@ -64,16 +65,16 @@ function draw() {
   if (displayRussell){
     drawEmotions(RussellList);
   }
-  fill(mapColor(x, y));
+  fill(mapColor(mouseX, mouseY));
   strokeWeight(4)
   stroke('white');
-  ellipse(x,y,100,100);
+  ellipse(mouseX,mouseY,100,100);
   strokeWeight(0);
   checkIfOutOfBounds();
 }
 
 function helpButton() {
-  alert("ARROW keys to move.\nENTER to mark an emotion location.\nTAB to toggle the circumplex labels.\nSPACE to toggle black background. ");
+  alert("HOVER MOUSE to move.\n CLICK to mark an emotion location.\nTAB to toggle the circumplex labels.\nSPACE to toggle black background. ");
   textSize(25);
 }
 
@@ -101,9 +102,9 @@ function mapColor(x, y){
 }
 
 function checkIfOutOfBounds(){
-  if (x < 0 || x >= windowWidth || y <0 || y >= windowHeight ){
-    x = windowWidth/2;
-    y = windowHeight/2;
+  if (mouseX < 0 || mouseX >= windowWidth || mouseY <0 || mouseY >= windowHeight ){
+    mouseX = windowWidth/2;
+    mouseY = windowHeight/2;
     alert("That's uncharted territory!");
   }
 }
@@ -146,6 +147,17 @@ function errData(err) {
   	console.log(err);
 }
 
+function markWord(){
+  var txt;
+  var emotion = prompt("Mark this spot with a word:", "joy");
+  if (emotion != null && emotion != "") {
+    txt = emotion;
+    newx = map(mouseX, 0, windowWidth, 0, 100);
+    newy = map(mouseY, 0, windowHeight, 0, 100);
+    emotions.push([newx, newy, txt]);
+  }
+}
+
 function keyPressed() {
   //code adapted from https://editor.p5js.org/2sman/sketches/rkGp1alib
   if (keyCode === UP_ARROW) {
@@ -159,16 +171,7 @@ function keyPressed() {
     x = x + 50;
   } else if (keyCode === ENTER) {
     keyCode = 33;
-    var txt;
-    var emotion = prompt("Mark this spot with a word:", "joy");
-    if (emotion == null || emotion == "") {
-      txt = "ok nvm";
-    } else {
-      txt = emotion;
-    }
-    newx = map(x, 0, windowWidth, 0, 100);
-    newy = map(y, 0, windowHeight, 0, 100);
-    emotions.push([newx, newy, txt]);
+    markWord(x, y);
   } else if (keyCode === TAB) {
     keyCode = 0;
     displayRussell = !displayRussell;
