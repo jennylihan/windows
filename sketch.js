@@ -2,6 +2,7 @@ var x = 0;
 var y = 0;
 let emotions = [];
 let displayRussell = false;
+let space = false;
 let RussellList = [[5, 55,"miserable" ], [15, 60, "sad"], [20, 70, "depressed"], [30, 80, "bored"], [40, 85, "droopy"], [45, 90, "exhausted"], [25, 30, "annoyed"], [20, 25, "frustrated"], [15, 20, "distressed"],[35, 20, "afraid"], [45, 10, "angry"], [60, 10, "astonished"], [77, 20, "excited"], [85, 40, "delighted"],[90, 45, "happy"],[90, 55, "pleased"],[85, 70, "serene"],[80, 75, "satisfied"],[80, 80, "calm"], [55, 90, "sleepy"]];
 
 function setup() {
@@ -16,27 +17,32 @@ function setup() {
 }
 
 function draw() {
-  background('black');
+  if (space) {
+    background('black');
+  } else {
+    background(mapColor(x,y));
+  }
   fill('white');
-  text('pleasant →', windowWidth *.91, windowHeight/2);
+  text('pleasant →', windowWidth *.90, windowHeight/2);
   text('← miserable', windowWidth * 0.01, windowHeight/2);
   text('↑ high energy', windowWidth/2 - 50, windowHeight*0.025);
   text('↓ low energy', windowWidth/2 - 50, windowHeight*0.965);
-  
   textSize(15);
   text('ARROW KEYS to move', windowWidth*.01, 20)
-  text('SPACE BAR to mark an emotional spot', windowWidth*.01, 40)
-  text('TAB to toggle circumplex labels from (Russell, 1980)', windowWidth * .01, 60)
+  text('ENTER to mark an emotional spot', windowWidth*.01, 40)
+  text('TAB to toggle circumplex labels', windowWidth * .01, 60)
+  text('SPACE to toggle black background', windowWidth * .01, 80)
   textSize(25);
-  
   drawEmotions(emotions);
   if (displayRussell){
     drawEmotions(RussellList);
   }
   fill(mapColor(x, y));
+  strokeWeight(4)
+  stroke('white');
   ellipse(x,y,100,100);
+  strokeWeight(0);
   checkIfOutOfBounds();
-  checkKeys();
 }
 
 function drawEmotions(emotionslist){
@@ -51,9 +57,9 @@ function drawEmotions(emotionslist){
 
 function mapColor(x, y){
   colorMode(HSB, 100);
-  h = 100*(x/windowWidth);
-  s = 100*(y/windowHeight);
-  b = 100* (1 - y/windowHeight);
+  h = 5+95*(x/windowWidth);
+  s = 5+95*(y/windowHeight);
+  b = 5+95*(1 - y/windowHeight);
   return color(h, s, b);
 }
 
@@ -62,26 +68,6 @@ function checkIfOutOfBounds(){
     x = windowWidth/2;
     y = windowHeight/2;
     alert("That's uncharted territory!");
-  }
-}
-
-function checkKeys(){
-  if (keyIsPressed && keyCode === 32) {
-    keyCode = 33;
-    var txt;
-    var emotion = prompt("Mark this spot with a word:", "joy");
-    if (emotion == null || emotion == "") {
-      txt = "ok nvm";
-    } else {
-      txt = emotion;
-    }
-    newx = map(x, 0, windowWidth, 0, 100);
-    newy = map(y, 0, windowHeight, 0, 100)
-    emotions.push([newx, newy, txt]);
-  }
-  if (keyIsPressed && keyCode === TAB) {
-    keyCode = 0;
-    displayRussell = !displayRussell;
   }
 }
 
@@ -96,5 +82,22 @@ function keyPressed() {
     x = x - 50;
   } else if (keyCode === RIGHT_ARROW) {
     x = x + 50;
+  } else if (keyCode === ENTER) {
+    keyCode = 33;
+    var txt;
+    var emotion = prompt("Mark this spot with a word:", "joy");
+    if (emotion == null || emotion == "") {
+      txt = "ok nvm";
+    } else {
+      txt = emotion;
+    }
+    newx = map(x, 0, windowWidth, 0, 100);
+    newy = map(y, 0, windowHeight, 0, 100);
+    emotions.push([newx, newy, txt]);
+  } else if (keyCode === TAB) {
+    keyCode = 0;
+    displayRussell = !displayRussell;
+  } else if (keyCode === 32) {
+    space = !space;
   }
 }
