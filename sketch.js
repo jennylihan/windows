@@ -2,7 +2,7 @@ var x = 0;
 var y = 0;
 let emotions = [];
 let displayRussell = false;
-let space = true;
+let space = false;
 let help = false;
 var database;
 var userId = "";
@@ -23,9 +23,13 @@ class Particle {
 
 // creation of a particle.
   createParticle(color) {
+    if (!space){
+      strokeWeight(1);
+    }
     stroke('white');
     fill(color);
     circle(this.x,this.y,this.r);
+    strokeWeight(0);
   }
 
 // setting the particle in motion.
@@ -112,7 +116,7 @@ function draw() {
 }
 
 function helpButton() {
-  alert("HOVER MOUSE to move.\n CLICK to mark an emotion location.\nTAB to toggle the circumplex labels.\nSPACE to toggle black background. ");
+  alert("HOVER MOUSE to move.\nCLICK to mark an emotion location.\nTAB to toggle the circumplex labels.\nSPACE to toggle black background. ");
   textSize(25);
 }
 
