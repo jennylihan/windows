@@ -2,7 +2,7 @@ var x = 0;
 var y = 0;
 let emotions = [];
 let displayRussell = false;
-let space = false;
+let space = true;
 let help = false;
 var database;
 var userId = "";
@@ -11,8 +11,6 @@ let RussellList = [[5, 55,"miserable" ], [15, 60, "sad"], [20, 70, "depressed"],
 
 function setup() {
   background(0);
-  // let inp = createInput('');
-  // inp.input(myInputEvent);
   createCanvas(windowWidth, windowHeight);
   textSize(25);
   textAlign(LEFT, CENTER);
@@ -78,6 +76,7 @@ function helpButton() {
   alert("ARROW keys to move.\nENTER to mark an emotion location.\nTAB to toggle the circumplex labels.\nSPACE to toggle black background. ");
   textSize(25);
 }
+
 function saveButton() {
   var username = prompt("What should we file this under?", "jenny's music");
   submitData(username);
@@ -119,7 +118,7 @@ function gotData (data) {
   	   var list = users[k].emotionlist;
   	   var name = users[k].name;
        if (name == username){
-         emotions = users[keys[0]].emotionlist;
+         emotions = users[keys[i]].emotionlist;
          userId = keys[i];
       }
     }
@@ -131,6 +130,8 @@ function submitData(username) {
 		name: username,
 	  emotionlist: emotions
 	}
+  console.log(userId);
+  console.log(username);
   if (userId == ""){
     var ref = database.ref('users');
     ref.push(data);
