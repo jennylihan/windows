@@ -7,7 +7,38 @@ let help = false;
 var database;
 var userId = "";
 let RussellList = [[5, 55,"miserable" ], [15, 60, "sad"], [20, 70, "depressed"], [30, 80, "bored"], [40, 85, "droopy"], [45, 90, "exhausted"], [25, 30, "annoyed"], [20, 25, "frustrated"], [15, 20, "distressed"],[35, 20, "afraid"], [45, 10, "angry"], [60, 10, "astonished"], [77, 20, "excited"], [85, 40, "delighted"],[90, 45, "happy"],[90, 55, "pleased"],[85, 70, "serene"],[80, 75, "satisfied"],[80, 80, "calm"], [55, 90, "sleepy"]];
+let particles = [];
 
+// this class describes the properties of a single particle.
+class Particle {
+// setting the co-ordinates, radius and the
+// speed of a particle in both the co-ordinates axes.
+  constructor(){
+    this.x = random(0,windowWidth);
+    this.y = random(0,windowHeight);
+    this.r = random(1,8);
+    this.xSpeed = random(-2,2);
+    this.ySpeed = random(-1,1.5);
+  }
+
+// creation of a particle.
+  createParticle(color) {
+    stroke('white');
+    fill(color);
+    circle(this.x,this.y,this.r);
+  }
+
+// setting the particle in motion.
+  moveParticle() {
+    if(this.x < 0 || this.x > windowWidth)
+      this.xSpeed*=-1;
+    if(this.y < 0 || this.y > windowHeight)
+      this.ySpeed*=-1;
+    this.x+=this.xSpeed;
+    this.y+=this.ySpeed;
+  }
+
+}
 
 function setup() {
   background(0);
@@ -15,8 +46,6 @@ function setup() {
   cnv.mouseClicked(markWord);
   textSize(25);
   textAlign(LEFT, CENTER);
-  x = windowWidth/2;
-  y = windowHeight/2;
   // Initialize Firebase
   config = {
     apiKey: "AIzaSyDmDbY6zDPha9ZoO7p7vzRlmq30Equb7w4",
@@ -48,13 +77,22 @@ function setup() {
   button2.style('border', 'none');
   button2.style('color', 'white');
   button2.style('background-color', 'Transparent');
-  button2.style('outline', 'none');}
+  button2.style('outline', 'none');
+
+  for(let i = 0;i<windowWidth/10;i++){
+    particles.push(new Particle());
+  }
+}
 
 function draw() {
   if (space) {
     background('black');
   } else {
     background(mapColor(mouseX,mouseY));
+  }
+  for(let i = 0;i<particles.length;i++) {
+    particles[i].createParticle(mapColor(mouseX, mouseY));
+    particles[i].moveParticle();
   }
   fill('white');
   text('pleasant →', windowWidth *.90, windowHeight/2);
