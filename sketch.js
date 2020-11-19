@@ -31,7 +31,8 @@ class Particle {
     stroke('white');
     fill(color);
     circle(this.x,this.y,this.r);
-    strokeWeight(0);
+    noStroke();
+
   }
 
 // setting the particle in motion.
@@ -120,7 +121,7 @@ function draw() {
   strokeWeight(4)
   stroke('white');
   ellipse(mouseX,mouseY,100,100);
-  strokeWeight(0);
+  noStroke();
   checkIfOutOfBounds();
 }
 
