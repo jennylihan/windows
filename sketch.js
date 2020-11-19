@@ -3,6 +3,7 @@ var y = 0;
 let emotions = [];
 let displayRussell = false;
 let space = false;
+let help = false;
 var database;
 var userId = "";
 let RussellList = [[5, 55,"miserable" ], [15, 60, "sad"], [20, 70, "depressed"], [30, 80, "bored"], [40, 85, "droopy"], [45, 90, "exhausted"], [25, 30, "annoyed"], [20, 25, "frustrated"], [15, 20, "distressed"],[35, 20, "afraid"], [45, 10, "angry"], [60, 10, "astonished"], [77, 20, "excited"], [85, 40, "delighted"],[90, 45, "happy"],[90, 55, "pleased"],[85, 70, "serene"],[80, 75, "satisfied"],[80, 80, "calm"], [55, 90, "sleepy"]];
@@ -34,7 +35,21 @@ function setup() {
 
   var ref = database.ref('users');
   ref.on('value', gotData, errData);
-}
+
+  button = createButton('< help >');
+  button.position(windowWidth*.01, 20);
+  button.mousePressed(helpButton);
+  button.style('border', 'none');
+  button.style('color', 'white');
+  button.style('background-color', 'Transparent');
+  button.style('outline', 'none');
+  button2 = createButton('< save >');
+  button2.position(windowWidth*.01, 40);
+  button2.mousePressed(saveButton);
+  button2.style('border', 'none');
+  button2.style('color', 'white');
+  button2.style('background-color', 'Transparent');
+  button2.style('outline', 'none');}
 
 function draw() {
   if (space) {
@@ -47,13 +62,6 @@ function draw() {
   text('← miserable', windowWidth * 0.01, windowHeight/2);
   text('↑ high energy', windowWidth/2 - 50, windowHeight*0.025);
   text('↓ low energy', windowWidth/2 - 50, windowHeight*0.965);
-  textSize(15);
-  text('ARROW KEYS to move', windowWidth*.01, 20)
-  text('ENTER to mark an emotional spot', windowWidth*.01, 40)
-  text('TAB to toggle circumplex labels', windowWidth * .01, 60)
-  text('SPACE to toggle black background', windowWidth * .01, 80)
-  text('ESC to save', windowWidth * .01, 100)
-  textSize(25);
   drawEmotions(emotions);
   if (displayRussell){
     drawEmotions(RussellList);
@@ -64,6 +72,15 @@ function draw() {
   ellipse(x,y,100,100);
   strokeWeight(0);
   checkIfOutOfBounds();
+}
+
+function helpButton() {
+  alert("ARROW keys to move.\nENTER to mark an emotion location.\nTAB to toggle the circumplex labels.\nSPACE to toggle black background. ");
+  textSize(25);
+}
+function saveButton() {
+  var username = prompt("What should we file this under?", "jenny's music");
+  submitData(username);
 }
 
 function drawEmotions(emotionslist){
@@ -156,8 +173,5 @@ function keyPressed() {
     displayRussell = !displayRussell;
   } else if (keyCode === 32) {
     space = !space;
-  } else if (keyCode === ESCAPE) {
-    var username = prompt("What should we file this under?", "jenny's music");
-    submitData(username);
   }
 }
