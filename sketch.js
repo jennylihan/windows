@@ -7,6 +7,7 @@ let help = false;
 let displayAll = false;
 var database;
 var userId = "";
+var username = "";
 let RussellList = [[5, 55,"miserable" ], [15, 60, "sad"], [20, 70, "depressed"], [30, 80, "bored"], [40, 85, "droopy"], [45, 90, "exhausted"], [25, 30, "annoyed"], [20, 25, "frustrated"], [15, 20, "distressed"],[35, 20, "afraid"], [45, 10, "angry"], [60, 10, "astonished"], [77, 20, "excited"], [85, 40, "delighted"],[90, 45, "happy"],[90, 55, "pleased"],[85, 70, "serene"],[80, 75, "satisfied"],[80, 80, "calm"], [55, 90, "sleepy"]];
 let particles = [];
 let displayed_emotions = [];
@@ -31,8 +32,7 @@ class Particle {
     stroke('white');
     fill(color);
     circle(this.x,this.y,this.r);
-    noStroke();
-
+    strokeWeight(0);
   }
 
 // setting the particle in motion.
@@ -67,7 +67,6 @@ function setup() {
 
   firebase.initializeApp(config);
   database = firebase.database();
-
   var ref = database.ref('users');
   ref.on('value', gotData, errData);
 
@@ -89,6 +88,8 @@ function setup() {
   for(let i = 0;i<windowWidth/10;i++){
     particles.push(new Particle());
   }
+  username = localStorage.getItem('username');
+
 }
 
 function draw() {
@@ -131,7 +132,7 @@ function helpButton() {
 }
 
 function saveButton() {
-  var username = prompt("What should we file this under?", "jenny's music");
+  alert("Saving and filing under..." + username);
   submitData(username);
 }
 
@@ -178,7 +179,6 @@ function gotData (data) {
   if (data.val() != null){
     var users = data.val();
     var keys = Object.keys(users);
-    var username = localStorage.getItem('username');
     for (var i = 0; i < keys.length; i++) {
   	   var k = keys[i];
   	   var list = users[k].emotionlist;
@@ -186,6 +186,7 @@ function gotData (data) {
        if (name == username){
          emotions = users[keys[i]].emotionlist;
          userId = keys[i];
+         console.log(keys[i]);
       }
     }
   }
@@ -196,8 +197,6 @@ function submitData(username) {
 		name: username,
 	  emotionlist: emotions
 	}
-  console.log(userId);
-  console.log(username);
   if (userId == ""){
     var ref = database.ref('users');
     ref.push(data);
@@ -220,6 +219,7 @@ function markWord(){
     newx = map(mouseX, 0, windowWidth, 0, 100);
     newy = map(mouseY, 0, windowHeight, 0, 100);
     emotions.push([newx, newy, txt]);
+    submitData(username);
   }
 }
 
