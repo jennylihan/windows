@@ -51,7 +51,7 @@ function setup() {
   background(0);
   cnv = createCanvas(windowWidth, windowHeight);
   cnv.mouseClicked(markWord);
-  textSize(25);
+  textSize(35);
   textAlign(LEFT, CENTER);
   // Initialize Firebase
   config = {
@@ -84,6 +84,8 @@ function setup() {
   button2.style('color', 'white');
   button2.style('background-color', 'Transparent');
   button2.style('outline', 'none');
+  
+  textSize(25);
 
   for(let i = 0;i<windowWidth/10;i++){
     particles.push(new Particle());

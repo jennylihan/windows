@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 })
 
 function setUp(href){
-  var username = prompt("What file do you want to open up?");
+  var username = prompt("What file do you want to open up / create?\nIf you want to see an existing file, try 'jenny's music' or 'mom' ");
   localStorage.setItem("username", username);
   window.transitionToPage(href);
 }
