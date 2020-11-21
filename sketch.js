@@ -1,3 +1,8 @@
+let inconsolata;
+function preload() {
+  inconsolata = loadFont('https://cdn.glitch.com/d343bc20-d576-4fcf-8829-86baa7d563d6%2FInconsolata-ExtraBold.ttf?v=1605925824670');
+}
+
 var x = 0;
 var y = 0;
 let emotions = [];
@@ -52,6 +57,7 @@ function setup() {
   cnv = createCanvas(windowWidth, windowHeight);
   cnv.mouseClicked(markWord);
   textSize(35);
+  textFont(inconsolata);
   textAlign(LEFT, CENTER);
   // Initialize Firebase
   config = {
@@ -77,7 +83,8 @@ function setup() {
   button.style('color', 'white');
   button.style('background-color', 'Transparent');
   button.style('outline', 'none');
-  button.style('font-size', '40px');
+  button.style('font-size', '30px');
+  button.style('font-family', 'Inconsolata');
   button2 = createButton('< save >');
   button2.position(windowWidth*.01, windowHeight*0.95);
   button2.mousePressed(saveButton);
@@ -85,7 +92,9 @@ function setup() {
   button2.style('color', 'white');
   button2.style('background-color', 'Transparent');
   button2.style('outline', 'none');
-  textSize(25);
+  button2.style('font-size', '30px');
+  button2.style('font-family', 'Inconsolata');
+  textSize(27);
 
   for(let i = 0;i<windowWidth/10;i++){
     particles.push(new Particle());
