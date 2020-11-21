@@ -196,7 +196,9 @@ function slowRevealEmotions() {
       mouseY > y1 - 70
     ) {
       fill("white");
+      textSize(28);
       text(item[2], x1, y1);
+      textSize(20);
       displayed_emotions.push(item);
     }
   });
