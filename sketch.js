@@ -165,7 +165,7 @@ function slowRevealEmotions(){
   emotions.forEach(function(item, index, array) {
     x1 = map(item[0], 0, 100, 0, windowWidth);
     y1 = map(item[1], 0, 100, 0, windowHeight);
-    if (mouseX < x1 + 50 && mouseX > x1 - 50 && mouseY < y1 + 50 && mouseY > y1 - 50){
+    if (mouseX < x1 + 70 && mouseX > x1 - 70 && mouseY < y1 + 70 && mouseY > y1 - 70){
       fill('white');
       text(item[2], x1, y1);
       console.log(item[2]);
