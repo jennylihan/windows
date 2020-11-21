@@ -77,7 +77,7 @@ function setup() {
   ref.on('value', gotData, errData);
 
   button = createButton('< help >');
-  button.position(windowWidth*.01, windowHeight*0.91);
+  button.position(windowWidth*.01, windowHeight*0.88);
   button.mousePressed(helpButton);
   button.style('border', 'none');
   button.style('color', 'white');
@@ -134,7 +134,7 @@ function draw() {
   fill(0,0,0,0);
   strokeWeight(4)
   stroke('white');
-  if (mouseX < windowWidth*0.1 && mouseY > windowHeight*0.9) {
+  if (mouseX < windowWidth*0.1 && mouseY > windowHeight*0.87) {
     cursor('grab');
   } else {
     cursor('default');
