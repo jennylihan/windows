@@ -78,13 +78,12 @@ function setup() {
   button.style('background-color', 'Transparent');
   button.style('outline', 'none');
   button2 = createButton('< save >');
-  button2.position(windowWidth*.01, 40);
+  button2.position(windowWidth*.01, 60);
   button2.mousePressed(saveButton);
   button2.style('border', 'none');
   button2.style('color', 'white');
   button2.style('background-color', 'Transparent');
   button2.style('outline', 'none');
-  
   textSize(25);
 
   for(let i = 0;i<windowWidth/10;i++){
@@ -123,9 +122,11 @@ function draw() {
   fill(0,0,0,0);
   strokeWeight(4)
   stroke('white');
-  ellipse(mouseX,mouseY,100,100);
-  noStroke();
-  checkIfOutOfBounds();
+  if (mouseX > 20 && mouseY > 70) {
+    ellipse(mouseX,mouseY,100,100);
+    noStroke();
+    checkIfOutOfBounds();    
+  }
 }
 
 function helpButton() {
