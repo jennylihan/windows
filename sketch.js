@@ -77,6 +77,7 @@ function setup() {
   button.style('color', 'white');
   button.style('background-color', 'Transparent');
   button.style('outline', 'none');
+  button.style('font-size', '40px');
   button2 = createButton('< save >');
   button2.position(windowWidth*.01, windowHeight*0.95);
   button2.mousePressed(saveButton);
