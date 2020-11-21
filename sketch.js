@@ -71,14 +71,14 @@ function setup() {
   ref.on('value', gotData, errData);
 
   button = createButton('< help >');
-  button.position(windowWidth*.01, 20);
+  button.position(windowWidth*.01, windowHeight*0.91);
   button.mousePressed(helpButton);
   button.style('border', 'none');
   button.style('color', 'white');
   button.style('background-color', 'Transparent');
   button.style('outline', 'none');
   button2 = createButton('< save >');
-  button2.position(windowWidth*.01, 60);
+  button2.position(windowWidth*.01, windowHeight*0.95);
   button2.mousePressed(saveButton);
   button2.style('border', 'none');
   button2.style('color', 'white');
@@ -90,6 +90,8 @@ function setup() {
     particles.push(new Particle());
   }
   username = localStorage.getItem('username');
+  mouseX = windowWidth*.5;
+  mouseY = windowHeight*.5;
 
 }
 
@@ -122,7 +124,7 @@ function draw() {
   fill(0,0,0,0);
   strokeWeight(4)
   stroke('white');
-  if (mouseX > 20 && mouseY > 70) {
+  if (mouseX > windowWidth*0.01 && mouseY < windowHeight*0.9) {
     ellipse(mouseX,mouseY,100,100);
     noStroke();
     checkIfOutOfBounds();    
