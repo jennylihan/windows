@@ -139,6 +139,7 @@ function draw() {
   text("← miserable", windowWidth * 0.01, windowHeight / 2);
   text("↑ high energy", windowWidth / 2 - 50, windowHeight * 0.025);
   text("↓ low energy", windowWidth / 2 - 50, windowHeight * 0.965);
+  textSize(20);
   // drawEmotions(emotions);
   if (displayRussell) {
     drawEmotions(RussellList);
@@ -167,7 +168,6 @@ function helpButton() {
   alert(
     "HOVER MOUSE to move.\nCLICK to mark an emotion location.\nTAB to toggle the circumplex labels.\nENTER to toggle the hidden emotions.\nSPACE to toggle black background. "
   );
-  textSize(25);
 }
 
 function saveButton() {
@@ -196,8 +196,9 @@ function slowRevealEmotions() {
       mouseY > y1 - 70
     ) {
       fill("white");
+      textSize(28);
       text(item[2], x1, y1);
-      console.log(item[2]);
+      textSize(20);
       displayed_emotions.push(item);
     }
   });
