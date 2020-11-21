@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', function(event) {
 })
 
 function setUp(href){
-  var username = prompt("What file do you want to open up / create?\nIf you want to see an existing file, try 'jenny's music' or 'mom' ");
+  var username = prompt("Which space do you want to open up / create?\nIf you want to create a new space, type in the name.\nIf you want to see an existing space, try 'jenny's music' or 'mom' ");
   localStorage.setItem("username", username);
   window.transitionToPage(href);
 }
