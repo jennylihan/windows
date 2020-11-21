@@ -1,7 +1,7 @@
 let notosans;
 function preload() {
   notosans = loadFont(
-    "https://cdn.glitch.com/d343bc20-d576-4fcf-8829-86baa7d563d6%2FNotoSansSC-Medium.otf?v=1605936141444"
+    "https://cdn.glitch.com/d343bc20-d576-4fcf-8829-86baa7d563d6%2FNotoSansSC-Regular.otf?v=1605939143378"
   );
 }
 
