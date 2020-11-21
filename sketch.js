@@ -273,7 +273,6 @@ function markWord() {
 }
 
 function keyPressed() {
-  //code adapted from https://editor.p5js.org/2sman/sketches/rkGp1alib
   if (keyCode === UP_ARROW) {
     y = y - 50;
   } else if (keyCode === DOWN_ARROW) {
