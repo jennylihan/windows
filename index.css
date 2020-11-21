@@ -19,9 +19,9 @@ body{
 svg{font-weight:bold;max-width:800px;height:100%;}
 
 .button {
-	background-color: White; /* Green */
+	background-color: transparent; /* Green */
   border: none;
-  color: black;
+  color: white;
   padding: 20px;
   text-align: center;
   text-decoration: none;
@@ -31,9 +31,15 @@ svg{font-weight:bold;max-width:800px;height:100%;}
   cursor: pointer;
 	border-radius: 4px;
 }
-p {
-color: #CCCCCC;
+
+a {
+  color: #FFD700
 }
+
+p {
+  color: #CCCCCC;
+}
+
 .center {
 	top: 50%
   margin: auto;
