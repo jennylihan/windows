@@ -190,10 +190,10 @@ function slowRevealEmotions() {
     x1 = map(item[0], 0, 100, 0, windowWidth);
     y1 = map(item[1], 0, 100, 0, windowHeight);
     if (
-      mouseX < x1 + 70 &&
-      mouseX > x1 - 70 &&
-      mouseY < y1 + 70 &&
-      mouseY > y1 - 70
+      mouseX < x1 + 40 &&
+      mouseX > x1 - 40 &&
+      mouseY < y1 + 40 &&
+      mouseY > y1 - 40
     ) {
       fill("white");
       textSize(28);
