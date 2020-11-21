@@ -11,7 +11,9 @@ document.addEventListener('DOMContentLoaded', function(event) {
 })
 
 function setUp(href){
-  var username = prompt("Which emotion space do you want to open up / create?\nIf you want to create a new space, type in the name.\nIf you want to see an existing space, try:\n'jenny's music', 'russel1980', or 'mom' ", "jenny's music");
+  var username = prompt("Which emotion space do you want to open up / create?\nIf you want to create a new space, type in the name.\nIf you want to see an existing space, try:\n'jenny's music', 'russel1980', or 'mom' ");
   localStorage.setItem("username", username);
-  window.transitionToPage(href);
+  if (username != null) {
+    window.transitionToPage(href);    
+  }
 }
