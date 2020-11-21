@@ -135,9 +135,9 @@ function draw() {
   strokeWeight(4)
   stroke('white');
   if (mouseX < windowWidth*0.1 && mouseY > windowHeight*0.9) {
-    cursor('pointer');
-    console.log("here");
+    cursor('grab');
   } else {
+    cursor('default');
     ellipse(mouseX,mouseY,100,100);
     noStroke();
     checkIfOutOfBounds();    

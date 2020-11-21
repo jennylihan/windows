@@ -1,19 +1,21 @@
 
-/* bigshot one font */
+/* bigshot one font   //Cabin Condensed */
 @import url(https://fonts.googleapis.com/css?family=Cabin+Condensed);
+@import url(https://fonts.googleapis.com/css?family=Inconsolata);
 
 body,html{margin:0;padding:0;height:100%;}
 
 
 body{
-	background-color: black;
+	background-color: #212121;
   background-size:cover;
-  font-family: 'Cabin Condensed', sans-serif;
+  font-family: 'Inconsolata', sans-serif;
   display:flex;
   flex-direction:column;
   justify-content:center;
   align-items:center;
 }
+
 svg{font-weight:bold;max-width:800px;height:100%;}
 
 .button {
@@ -29,7 +31,9 @@ svg{font-weight:bold;max-width:800px;height:100%;}
   cursor: pointer;
 	border-radius: 4px;
 }
-
+p {
+color: white;
+}
 .center {
 	top: 50%
   margin: auto;
