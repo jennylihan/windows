@@ -7,7 +7,7 @@ body,html{margin:0;padding:0;height:100%;}
 
 
 body{
-	background-color: #212121;
+	background-color: black;
   background-size:cover;
   font-family: 'Inconsolata', sans-serif;
   display:flex;
@@ -32,7 +32,7 @@ svg{font-weight:bold;max-width:800px;height:100%;}
 	border-radius: 4px;
 }
 p {
-color: white;
+color: #CCCCCC;
 }
 .center {
 	top: 50%
