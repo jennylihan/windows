@@ -247,8 +247,8 @@ function errData(err) {
 function markWord() {
   var txt;
   var emotion = prompt("Mark this spot with a word:", "joy");
-  if (username == "russell1980" || username == ""){
-    
+  if (username == "russell1980" || username == "mom"){
+    alert("Ooops! Sorry to say this now but I made this space uneditable. Try to edit another space or create your own :)");
   } else if (emotion != null && emotion != "") {
     txt = emotion;
     newx = map(mouseX, 0, windowWidth, 0, 100);
