@@ -247,7 +247,9 @@ function errData(err) {
 function markWord() {
   var txt;
   var emotion = prompt("Mark this spot with a word:", "joy");
-  if (emotion != null && emotion != "") {
+  if (username == "russell1980" || username == ""){
+    
+  } else if (emotion != null && emotion != "") {
     txt = emotion;
     newx = map(mouseX, 0, windowWidth, 0, 100);
     newy = map(mouseY, 0, windowHeight, 0, 100);
