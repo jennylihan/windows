@@ -38,7 +38,7 @@ let RussellList = [
   [55, 90, "sleepy"]
 ];
 let particles = [];
-let displayed_emotions = [];
+let displayed_emotions = new Set();
 
 // this class describes the properties of a single particle.
 class Particle {
@@ -149,7 +149,6 @@ function draw() {
   } else {
     drawEmotions(displayed_emotions);
   }
-  drawEmotions(displayed_emotions);
   slowRevealEmotions();
   fill(0, 0, 0, 0);
   strokeWeight(4);
@@ -160,7 +159,6 @@ function draw() {
     cursor("default");
     ellipse(mouseX, mouseY, 100, 100);
     noStroke();
-    checkIfOutOfBounds();
   }
 }
 
@@ -199,7 +197,7 @@ function slowRevealEmotions() {
       textSize(28);
       text(item[2], x1, y1);
       textSize(20);
-      displayed_emotions.push(item);
+      displayed_emotions.add(item);
     }
   });
 }
@@ -210,19 +208,6 @@ function mapColor(x, y) {
   s = 5 + 95 * (y / windowHeight);
   b = 5 + 95 * (1 - y / windowHeight);
   return color(h, s, b);
-}
-
-function checkIfOutOfBounds() {
-  if (
-    mouseX < 0 ||
-    mouseX >= windowWidth ||
-    mouseY < 0 ||
-    mouseY >= windowHeight
-  ) {
-    mouseX = windowWidth / 2;
-    mouseY = windowHeight / 2;
-    alert("That's uncharted territory!");
-  }
 }
 
 function gotData(data) {
@@ -273,16 +258,7 @@ function markWord() {
 }
 
 function keyPressed() {
-  if (keyCode === UP_ARROW) {
-    y = y - 50;
-  } else if (keyCode === DOWN_ARROW) {
-    y = y + 50;
-  }
-  if (keyCode === LEFT_ARROW) {
-    x = x - 50;
-  } else if (keyCode === RIGHT_ARROW) {
-    x = x + 50;
-  } else if (keyCode === ENTER) {
+  if (keyCode === ENTER) {
     displayAll = !displayAll;
   } else if (keyCode === TAB) {
     keyCode = 0;
