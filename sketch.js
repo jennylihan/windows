@@ -140,7 +140,6 @@ function draw() {
   text("↑ high energy", windowWidth / 2 - 50, windowHeight * 0.025);
   text("↓ low energy", windowWidth / 2 - 50, windowHeight * 0.965);
   textSize(20);
-  // drawEmotions(emotions);
   if (displayRussell) {
     drawEmotions(RussellList);
   }
