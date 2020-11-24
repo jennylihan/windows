@@ -135,7 +135,7 @@ function draw() {
     particles[i].moveParticle();
   }
   fill("white");
-  text("pleasant →", windowWidth * 0.9, windowHeight / 2);
+  text("pleasant →", windowWidth * 0.92, windowHeight / 2);
   text("← miserable", windowWidth * 0.01, windowHeight / 2);
   text("↑ high energy", windowWidth / 2 - 50, windowHeight * 0.025);
   text("↓ low energy", windowWidth / 2 - 50, windowHeight * 0.965);
