@@ -1,33 +1,29 @@
-let notosans;let img;
-
+let notosans;
 function preload() {
   notosans = loadFont(
     "https://cdn.glitch.com/d343bc20-d576-4fcf-8829-86baa7d563d6%2FNotoSansSC-Regular.otf?v=1605939143378"
-    );
+  );
 }
 
 var x = 0;
 var y = 0;
 let displayed_emotions = new Set();
 
-let x1 = 0;
-let y1 = 0;
-let x2 = x1 + 40;
-let y2 = y1 + 40;
-let even = true;
-let angle = 0;
+let x1 = 100;
+let y1 = 100;
+let x2 = 200;
+let y2 = 300;
+let width = x2 - x1;
+let height = y2 - y1;
 
 function setup() {
   background(0);
-  angleMode(DEGREES);
-  cnv = createCanvas(windowWidth, windowHeight, WEBGL);
-  // cnv = createCanvas(windowWidth, windowHeight);
+  cnv = createCanvas(windowWidth, windowHeight);
   cnv.mouseClicked(markCorner);
   textSize(35);
   textFont(notosans);
   textAlign(LEFT, CENTER);
-  img = createImg('chinatown.jpg');
-  img.hide();
+
   // Initialize Firebase
   config = {
     apiKey: "AIzaSyDmDbY6zDPha9ZoO7p7vzRlmq30Equb7w4",
@@ -57,66 +53,29 @@ function setup() {
   // username = localStorage.getItem("username");
 
   textSize(27);
+  mouseX = windowWidth * 0.5;
+  mouseY = windowHeight * 0.5;
+
   background(0);
   translate(140, 0);
 }
 
+
 function draw() {
-    noSmooth();
-    clear();
-    // image(img, -1*windowWidth/2,-1*windowHeight/2); 
-    // Draw gray box
-    stroke('crimson');
-    let width = Math.abs(x2 - x1);
-    let height = Math.abs(y2 - y1);
-    rotate_maybe();
-    line(x1, y1, x1, y1+height);
-    line(x1, y1, x1+width, y1);
-    line(x1, y1+height, x2, y2);
-    line(x1+width, y1, x2, y2);
-    // grid_s(x1, y1, x2, y2, 7, 7);
-    outlock(x1, y1, Math.abs(x1 - x2)/7);
-    // outlock(x1+100, y1-200, Math.abs(x1 - x2)/7);
-    image(img,x1, y1, 40*15,40*15);
+  noSmooth();
+  // Draw gray box
+  stroke(200);
+  line(x1, y1, x1, y1+height);
+  line(x1, y1, x1+width, y1);
+  line(x1, y1+height, x2, y2);
+  line(x1+width, y1, x2, y2);
 }
 
 function markCorner(){
-  x1 = mouseX - windowWidth/2;
-  y1 = mouseY - windowHeight/2;
-  x2 = x1+600;
-  y2 = y1+600;
-  angle=0;
-}
-
-function grid_s(x_1, y_1, x_2, y_2, num_rows, num_cols){
-  let w = Math.abs(x_1 - x_2)/num_rows;
-  let h = Math.abs(y_1 - y_2)/num_cols;
-  for (let i = 0; i < num_cols; i++){
-    for (let j = 0; j < num_rows; j++){
-        strokeWeight(2);
-        noFill();
-        rect(x_1 + w*i, y_1 + h*j, w, h);
-    }  
-  }
-}
-
-function add_spikes(x, y, side, unit){
-    strokeWeight(15);
-    line(x, y, x, y-unit); //top
-    line(x+side, y, x+side + unit, y); //right
-    line(x+side, y+side, x+side, y+side+unit);//bottom
-    line(x, y+side, x-unit, y+side); //left
-}
-
-function outlock(x_1, y_1, side){
-    let outlock_list = [[3*side, side], [2*side, 3*side], [1*side, 5*side]];
-    outlock_list.forEach(function(coord) {
-        strokeWeight(15);
-        let offset = coord[0];
-        let wid = coord[1];
-        rect(x_1 + offset, y_1 + offset, wid, wid);
-        add_spikes(x_1+offset, y_1+offset, wid, side);
-    });
+  x2 = x1;
+  y2 = y1;
+  x1 = mouseX;
+  y1 = mouseY;
 }
 
 function helpButton() {
@@ -165,16 +124,12 @@ function saveButton() {
 //   console.log(err);
 // }
 
-function rotate_maybe(){
-  rotateY(angle);
-}
-
-
 function keyPressed() {
-  if (keyCode === UP_ARROW) {
-    angle += 5;
-  } else if (keyCode === DOWN_ARROW) {
-    angle -= 5;
+  if (keyCode === ENTER) {
+    displayAll = !displayAll;
+  } else if (keyCode === TAB) {
+    keyCode = 0;
+    displayRussell = !displayRussell;
   } else if (keyCode === 32) {
     space = !space;
   }
