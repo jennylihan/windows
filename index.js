@@ -5,15 +5,3 @@ window.transitionToPage = function(href) {
         window.location.href = href
     }, 500)
 }
-
-document.addEventListener('DOMContentLoaded', function(event) {
-    document.querySelector('body').style.opacity = 1
-})
-
-function setUp(href){
-  var username = prompt("Pick a location to look through.");
-  localStorage.setItem("username", username);
-  if (username != null) {
-    window.transitionToPage(href);    
-  }
-}

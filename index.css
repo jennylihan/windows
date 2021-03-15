@@ -7,7 +7,7 @@ body,html{margin:0;padding:2px;height:100%;}
 
 
 body{
-	background-color: black;
+	background-color: white;
   background-size:cover;
   font-family: 'Inconsolata', sans-serif;
   display:flex;
@@ -21,7 +21,7 @@ svg{font-weight:bold;max-width:800px;height:100%;}
 .button {
 	background-color: transparent; /* Green */
   border: none;
-  color: white;
+  color: FireBrick;
   padding: 20px;
   text-align: center;
   text-decoration: none;
@@ -33,22 +33,22 @@ svg{font-weight:bold;max-width:800px;height:100%;}
 }
 
 a {
-  color: #FFD700
+  color: firebrick
 }
 
 p {
-  color: #CCCCCC;
+  color: firebrick;
 }
 
 .center {
-	top: 50%
   margin: auto;
   width:50%;
   padding: 10px;
 }
 
 #centerbutton {
-	top: 50%
+	width: 40%;
   margin: auto;
-  padding: 10px 24px;
+  padding: 0px 0px 40px 80px;
+  text-align: left;
 }

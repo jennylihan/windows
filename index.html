@@ -18,42 +18,19 @@
 </head>
 
 <body>
-  <div class="center">
     <svg viewbox="0 0 100 20">
-      <defs>
-        <linearGradient id="gradient">
-          <stop color="#000"/>
-        </linearGradient>
-        <pattern id="wave" x="0" y="-0.5" width="100%" height="100%" patternUnits="userSpaceOnUse">
-          <path id="wavePath" d="M-40 9 Q-30 7 -20 9 T0 9 T20 9 T40 9 T60 9 T80 9 T100 9 T120 9 V20 H-40z" mask="url(#mask)" fill="url(#gradient)">
-            <animateTransform
-                attributeName="transform"
-                begin="0s"
-                dur="1.5s"
-                type="translate"
-                from="0,0"
-                to="40,0"
-                repeatCount="indefinite" />
-          </path>
-        </pattern>
-      </defs>
-      <text text-anchor="middle" x="50" y="11" font-size="15" fill="white" fill-opacity=".2">windows</text>
-      <!-- <text text-anchor="middle" x="50" y="11" font-size="15" fill="url(#wave)"  fill-opacity="1">windows</text> -->
+      <text text-anchor="middle" x="50" y="11" font-size="15" fill="FireBrick" fill-opacity=".8">windows</text>
     </svg>
-  </div>
-  <!-- <div class="center">
-    <p>
-      Add a Chinese lattice to your window. 
-    </p>
-    <br>
-    <br>
-    <p>
-      [TODO] Upload a photo OR explore an existing location.
-    </p>
-  </div> -->
   <div id="centerbutton">
-    <button class = "button" type="button" onclick="transitionToPage('../about.html')"><u>add photo →</u></button>
-    <button class = "button" type="button" onclick="setUp('../space.html')"><u>explore →</u></button>
+    <button class = "button" type="button" onclick="transitionToPage('https://glitch.com/edit/#!/redchamber')"><u>see code here →</u></button><br>    
+    <button class = "button" type="button" onclick="transitionToPage('./pages/march1.html')"><u>mon. march 1 (accident: click to place dysfunctional grids)→</u></button> <br>
+    <button class = "button" type="button" onclick="transitionToPage('./pages/march3.html')"><u>wed. march 3 (a single lattice: click to place, arrow keys to rotate)→</u></button><br>
+    <button class = "button" type="button" onclick="transitionToPage('./pages/march8.html')"><u>mon. march 8 (abandoned test of 3d boxes: arrow keys to rotate) →</u></button><br>
+    <button class = "button" type="button" onclick="transitionToPage('./pages/march10a.html')"><u>tues. march 9 (Dan Schiffman tutorial on WEBGL)→</u></button>
+    <button class = "button" type="button" onclick="transitionToPage('./pages/march10.html')"><u>wed. march 10 (added Lattice class, rotations)→</u></button>
+    <button class = "button" type="button" onclick="transitionToPage('./pages/march11.html')"><u>thurs. march 11 (experiment with z axis)→</u></button><br>
+    <button class = "button" type="button" onclick="transitionToPage('./pages/march12.html')"><u>fri. march 12 (talk with camille)→</u></button>
+
   </div>
 
   <script src="https://www.gstatic.com/firebasejs/8.0.2/firebase-app.js"></script>

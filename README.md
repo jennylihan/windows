@@ -1,7 +1,7 @@
-Space to Feel
+Windows
 =================
 
-Created by Jenny Han for ARTSTUDI 168 (Anja Ulfeldt)
+Created by Jenny Han for ARTSTUDI (Camille Utterback)
 
 
 Citations
