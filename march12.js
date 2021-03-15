@@ -1,96 +1,151 @@
 let notosans;let img;
-let w1;
-
 let windowlist = new Set();
-let angle = 0;
-let step = 0;
-
-function preload() {
-  notosans = loadFont(
-    "https://cdn.glitch.com/d343bc20-d576-4fcf-8829-86baa7d563d6%2FNotoSansSC-Regular.otf?v=1605939143378"
-    );
-}
-
+let starlist = [];
+let moonlist = [];
+let unit = 100;
+let max_ring = 3; //needs to be odd number
+let moon;
+let center_x = 0;
+let center_y = 0;
+let strokeweight = 30;
 
 function setup() {
-  background(0);
   angleMode(DEGREES);
   cnv = createCanvas(windowWidth, windowHeight, WEBGL);
-  //cnv.mouseClicked(markCorner);
-  for (let i = 0; i  < 40; i++){
-    windowlist.add(new Lattice());
-  }
+  regenerate();
+  img = loadImage('moon1.png');
+  //moon
+  moonlist.push(new Moon(true));
+  moonlist.push(new Moon(false));
 }
 
 function draw() {
-    background ('firebrick');
-    stroke('white');
-    fill('firebrick');
-    windowlist.forEach(function(item){
-      item.move();
-      item.display();
-    });
+  background('black');
+  //night scene with stars from http://blog.ocad.ca/wordpress/digf6003-fw201803-01/2019/02/computational-apis-moon-phases-when/
+  fill('#030362');
+  rectMode(CENTER);
+  square(center_x, center_y, max_ring*unit);
+
+  //ring of window panes
+  windowlist.forEach(function(item){
+    item.display();
+  });
+
+  //draw moon
+  moonlist.forEach(function(item){
+    item.update();
+    item.display();
+  });
+  //clean up spill over
+  clean_up_spill();
 }
 
-function add_spikes(x, y, side, unit){
-  strokeWeight(4);
-  line(x, y, x, y-unit); //top
-  line(x+side, y, x+side + unit, y); //right
-  line(x+side, y+side, x+side, y+side+unit);//bottom
-  line(x, y+side, x-unit, y+side); //left
-}
-
-class Lattice {
-  constructor(x, y){
-    this.x = random(-windowWidth/2, windowWidth/2);
-    this.y = random(-windowHeight/2, windowHeight/2);
-    this.speed = .7;
-    this.gridsize = 50;
-    this.sidelength = 50*7;
-    this.z = random(-100, -100); 
+function regenerate(){
+  windowlist = new Set();
+  starlist = [];
+  //create a window
+  for (let i = 1; i  <= max_ring; i+=2){
+    windowlist.add(new Ring(i));
   }
+  //make star list
+  for (var i = 0; i < 50*max_ring; i++) {
+    var x = random(-1*max_ring*unit/2, max_ring*unit/2);
+    var y = random(-1*max_ring*unit/2, max_ring*unit/2);
+    starlist.push([x,y]);
+  }
+}
 
-  move() {
-    // this.z = this.speed;
-    // this.y += random(-this.speed, this.speed);
+function clean_up_spill(){
+  fill('black');
+  rectMode(CENTER);
+  let ringcount = ( max_ring -1 ) / 2 + 1;
+  rect(0,-1*ringcount*unit,windowWidth, 200);
+  rect(ringcount*unit,0,200, windowHeight);
+  rect(-1*ringcount*unit,0,200, windowHeight);
+  rect(0,ringcount*unit,windowWidth, 200);
+}
+
+function draw_stars(){
+  starlist.forEach(function(star){
+    var r = 0.4;
+    fill('#8282C7');
+    noStroke();
+    ellipse(star[0], star[1], r*2, r*2);
+
+  });
+}
+
+function inbounds(x, y, width,height){
+  return (x < width/2 && y < height/2 && x > -1*width/2 && y > -1*height/2);
+}
+
+
+class Moon {
+  constructor(xmouse){
+    this.r = 3*unit;
+    this.x = -5*unit;
+    this.y = 3*unit;
+    this.yoffset = -3*unit;
+    this.angle = 0;
+    this.mouse = xmouse;
+  }
+  update() {
+    this.angle += this.mouse ?  map(mouseX, 0, width, 0, 1) : map(mouseY, 0, height, -1, 0) ;
+    this.x = this.r*cos(this.angle);
+    this.y = this.r*sin(this.angle) + this.yoffset;
+  }
+  display() {
+    rotate(this.angle);
+    draw_stars();
+    if (inbounds(this.x, this.y, max_ring*unit,max_ring*unit)){
+      image(img, this.x, this.y, unit, unit);
+    }
+    rotate(-1*this.angle);
+  }
+}
+
+class Ring {
+  constructor(ring){
+    this.x = 0;
+    this.y = 0;
+    this.unit = unit;
+    this.ringnum = ring;
+    this.fullside = unit*ring;
+    this.rectside = (ring - 1)*unit;
   }
 
   display() {
-    translate(0, 0, this.z);
-    this.outline();
-    this.outlock(this.x, this.y, this.gridsize, this.gridsize);
+    this.outline(this.fullside);
+    for (let i = 0; i < 4; i++){
+      this.onerect(i,-(this.ringnum-2)*this.unit/2, -this.ringnum*this.unit/2,this.rectside,this.unit);
+    }
   }
 
-  outline(){
+  onerect(num,leftx,topy,width,height){
+    rectMode(CORNER);
+    strokeWeight(strokeweight);
+    stroke('black');
+    rotate(90*num);
     noFill();
-    square(this.x, this.y, this.sidelength);
+    rect(leftx,topy,width,height);
+    rotate(-90*num);
   }
 
-  outlock(x_1, y_1, side){
-      let outlock_list = [[3*side, side], [2*side, 3*side], [1*side, 5*side]];
-      outlock_list.forEach(function(coord) {
-          strokeWeight(4);
-          let offset = coord[0];
-          let wid = coord[1];
-          rect(x_1 + offset, y_1 + offset, wid, wid);
-          add_spikes(x_1+offset, y_1+offset, wid, side);
-      });
+  outline(length){
+    rectMode(CENTER);
+    stroke('black');
+    strokeWeight(strokeweight);
+    noFill();
+    square(this.x, this.y, length);
   }
-
 }
-
-function rotate_maybe(){
-  // rotateY(angle);
-  // this.translate += ( millis () / 1000); 
-}
-
 
 function keyPressed() {
   if (keyCode === UP_ARROW) {
-    step += 5;
+    max_ring +=2;
+    regenerate();
   } else if (keyCode === DOWN_ARROW) {
-    step -= 5;
-  } else if (keyCode === 32) {
-    space = !space;
+    max_ring -=2;
+    regenerate();
   }
 }
