@@ -2,12 +2,13 @@ let notosans;let img;
 let windowlist = new Set();
 let starlist = [];
 let moonlist = [];
-let unit = 100;
-let max_ring = 3; //needs to be odd number
+let unit = 70;
+let max_ring = 9; //needs to be odd number
 let moon;
 let center_x = 0;
 let center_y = 0;
 let strokeweight = 30;
+let skycol;
 
 function setup() {
   angleMode(DEGREES);
@@ -15,14 +16,17 @@ function setup() {
   regenerate();
   img = loadImage('moon1.png');
   //moon
-  moonlist.push(new Moon(true));
-  moonlist.push(new Moon(false));
+  moonlist.push(new Moon(true, 100));
+  moonlist.push(new Moon(false, -200));
+  moonlist.push(new Moon(false, -50));
 }
 
 function draw() {
   background('black');
   //night scene with stars from http://blog.ocad.ca/wordpress/digf6003-fw201803-01/2019/02/computational-apis-moon-phases-when/
-  fill('#030362');
+  let amt = map(mouseY, windowHeight/2, windowHeight, 0,.1);
+  skycol = lerpColor(color('black'),color('#030362'), amt);
+  fill(skycol);
   rectMode(CENTER);
   square(center_x, center_y, max_ring*unit);
 
@@ -59,10 +63,12 @@ function clean_up_spill(){
   fill('black');
   rectMode(CENTER);
   let ringcount = ( max_ring -1 ) / 2 + 1;
+  translate(center_x, center_y);
   rect(0,-1*ringcount*unit,windowWidth, 200);
   rect(ringcount*unit,0,200, windowHeight);
   rect(-1*ringcount*unit,0,200, windowHeight);
   rect(0,ringcount*unit,windowWidth, 200);
+  translate(-center_x, -center_y);
 }
 
 function draw_stars(){
@@ -81,16 +87,17 @@ function inbounds(x, y, width,height){
 
 
 class Moon {
-  constructor(xmouse){
+  constructor(xmouse,offset){
     this.r = 3*unit;
     this.x = -5*unit;
     this.y = 3*unit;
+    this.offset = offset;
     this.yoffset = -3*unit;
     this.angle = 0;
     this.mouse = xmouse;
   }
   update() {
-    this.angle += this.mouse ?  map(mouseX, 0, width, 0, 1) : map(mouseY, 0, height, -1, 0) ;
+    this.angle += map(mouseX+this.offset, 0, width, 0, 1);
     this.x = this.r*cos(this.angle);
     this.y = this.r*sin(this.angle) + this.yoffset;
   }
@@ -100,9 +107,26 @@ class Moon {
       draw_stars();
     }
     if (inbounds(this.x, this.y, max_ring*unit,max_ring*unit)){
-      image(img, this.x, this.y, unit, unit);
+      // image(img, this.x, this.y, unit, unit);
+      noStroke();
+      fill('white');
+      this.moon(this.x, this.y, 80, 80); //moon
     }
     rotate(-1*this.angle);
+  }
+
+  moon(x, y, size){
+    //adapted from https://editor.p5js.org/stormhartley1/sketches/kpPRYQC5i
+    let sliderval = map(mouseX, width/2, width, x, x+200);
+    noStroke();
+    fill(230,230,180, 80);
+    ellipse(x,y,190,190);
+
+    noStroke();
+    fill(skycol);
+    if (inbounds(sliderval, y,  max_ring*unit,max_ring*unit)){
+      ellipse(sliderval,y,200,200);
+    }
   }
 }
 
@@ -141,6 +165,7 @@ class Ring {
     square(this.x, this.y, length);
   }
 }
+
 function mouseClicked(){
    window.location = 'window2.html';
 }
