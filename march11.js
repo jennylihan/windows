@@ -3,6 +3,7 @@ let w1;
 
 let windowlist = new Set();
 let angle = 0;
+let step = 0;
 
 function preload() {
   notosans = loadFont(
@@ -16,7 +17,7 @@ function setup() {
   angleMode(DEGREES);
   cnv = createCanvas(windowWidth, windowHeight, WEBGL);
   //cnv.mouseClicked(markCorner);
-  for (let i = 0; i  < 30; i++){
+  for (let i = 0; i  < 20; i++){
     windowlist.add(new Lattice());
   }
 }
@@ -40,22 +41,22 @@ function add_spikes(x, y, side, unit){
 }
 
 class Lattice {
-  constructor(){
+  constructor(x, y){
     this.x = random(-windowWidth/2, windowWidth/2);
     this.y = random(-windowHeight/2, windowHeight/2);
-    this.speed = 1;
+    this.speed = .6;
     this.gridsize = 50;
     this.sidelength = 50*7;
+    this.z = random(-1000, -100); 
   }
 
   move() {
-    this.x += random(-this.speed, this.speed);
-    this.y += random(-this.speed, this.speed);
-    console.log(this.x);
+    this.z += this.speed;
+    // this.y += random(-this.speed, this.speed);
   }
 
   display() {
-    rotate_maybe();
+    translate(0, 0, this.z);
     this.outline();
     this.outlock(this.x, this.y, this.gridsize, this.gridsize);
   }
@@ -63,10 +64,6 @@ class Lattice {
   outline(){
     noFill();
     square(this.x, this.y, this.sidelength);
-    // line(this.x, this.y, this.x, this.y+this.sidelength);
-    // line(this.x, this.y, this.x+this.sidelength, this.y);
-    // line(this.x, this.y+this.sidelength, this.x+this.sidelength, y2);
-    // line(this.x+this.sidelength, this.y, this.x+this.sidelength, this.y+this.sidelength);
   }
 
   outlock(x_1, y_1, side){
@@ -84,15 +81,15 @@ class Lattice {
 
 function rotate_maybe(){
   // rotateY(angle);
-  rotateY ( millis () / 1000); 
+  // this.translate += ( millis () / 1000); 
 }
 
 
 function keyPressed() {
   if (keyCode === UP_ARROW) {
-    angle += 5;
+    step += 5;
   } else if (keyCode === DOWN_ARROW) {
-    angle -= 5;
+    step -= 5;
   } else if (keyCode === 32) {
     space = !space;
   }
