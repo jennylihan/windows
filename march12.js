@@ -1,4 +1,10 @@
-let notosans;let img;
+let notosans;
+function preload() {
+  notosans = loadFont(
+    "https://cdn.glitch.com/d343bc20-d576-4fcf-8829-86baa7d563d6%2FNotoSansSC-Regular.otf?v=1605939143378"
+  );
+}
+let img;
 let windowlist = new Set();
 let starlist = [];
 let moonlist = [];
@@ -15,16 +21,18 @@ function setup() {
   cnv = createCanvas(windowWidth, windowHeight, WEBGL);
   regenerate();
   img = loadImage('moon1.png');
+  textFont(notosans);
+  textAlign(CENTER);
   //moon
   moonlist.push(new Moon(true, 100));
   moonlist.push(new Moon(false, -200));
-  moonlist.push(new Moon(false, -50));
 }
 
 function draw() {
   background('black');
-  //night scene with stars from http://blog.ocad.ca/wordpress/digf6003-fw201803-01/2019/02/computational-apis-moon-phases-when/
-  let amt = map(mouseY, windowHeight/2, windowHeight, 0,.1);
+  
+//night scene with stars from http://blog.ocad.ca/wordpress/digf6003-fw201803-01/2019/02/computational-apis-moon-phases-when/
+  let amt = map(mouseY, windowHeight/2, windowHeight, 0,.15);
   skycol = lerpColor(color('black'),color('#030362'), amt);
   fill(skycol);
   rectMode(CENTER);
@@ -40,8 +48,14 @@ function draw() {
     item.update();
     item.display();
   });
+  
   //clean up spill over
   clean_up_spill();
+  
+  //give instructions
+  fill("white");
+  textSize(16);
+  text("options: ←, ↑, ↓, →, move mouse, mouse click", 0 ,0.88*height/2);
 }
 
 function regenerate(){
@@ -177,5 +191,9 @@ function keyPressed() {
   } else if (keyCode === DOWN_ARROW) {
     max_ring -=2;
     regenerate();
-  }
+  } else if (keyCode === LEFT_ARROW) {
+    moonlist.pop();
+  } else if (keyCode === RIGHT_ARROW) {
+    moonlist.push(new Moon(false, random(200)));
+  } 
 }
